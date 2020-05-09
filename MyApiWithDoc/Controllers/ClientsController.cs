@@ -30,7 +30,16 @@ namespace MyApiWithDoc.Controllers
             }
         }
 
+        /// <summary>
+        /// Get the client response by client id
+        /// </summary>
+        /// <param name="id">Client id</param>
+        /// <returns></returns>
         [HttpGet("{id}")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<ClientResponse> GetById([FromRoute] int id)
         {
             if (id <= 0)
@@ -43,7 +52,17 @@ namespace MyApiWithDoc.Controllers
             return Ok(clientResponse);
         }
 
+        /// <summary>
+        /// Get the list of clients by name and/or gender
+        /// </summary>
+        /// <param name="name">Part of name</param>
+        /// <param name="gender">Male or Female</param>
+        /// <returns></returns>
         [HttpGet("search")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<IEnumerable<ClientResponse>> GetByFilter(
             [FromQuery] string name = null,
             [FromQuery] Gender? gender = null)
@@ -81,7 +100,14 @@ namespace MyApiWithDoc.Controllers
                 return BadRequest();
         }
 
+        /// <summary>
+        /// Get the list of all clients
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<ClientResponse> GetAll()
         {
             try
@@ -98,7 +124,15 @@ namespace MyApiWithDoc.Controllers
             }
         }
 
+        /// <summary>
+        /// Add a new client
+        /// </summary>
+        /// <param name="clientRequest"></param>
+        /// <returns></returns>
         [HttpPost]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<int> Post([FromBody] CreateClientRequest clientRequest)
         {
             if (!ModelState.IsValid)
@@ -117,7 +151,17 @@ namespace MyApiWithDoc.Controllers
             return CreatedAtAction(nameof(Post), new { Id = client.Id });
         }
 
+        /// <summary>
+        /// Update an existing client
+        /// </summary>
+        /// <param name="id">Client id</param>
+        /// <param name="clientRequest"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<int> Put(
             [FromRoute] int id,
             [FromBody] UpdateClientRequest clientRequest)
@@ -139,7 +183,16 @@ namespace MyApiWithDoc.Controllers
             return Ok(new { Id = client.Id });
         }
 
+        /// <summary>
+        /// Enable or disable a client
+        /// </summary>
+        /// <param name="id">Client id</param>
+        /// <param name="enabled">Enable/Disable</param>
+        /// <returns></returns>
         [HttpPatch("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<int> Patch(
             [FromRoute] int id,
             [FromQuery] bool enabled)
@@ -158,7 +211,15 @@ namespace MyApiWithDoc.Controllers
             return Ok(new { Id = client.Id });
         }
 
+        /// <summary>
+        /// Remove a client by client id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<int> Delete([FromRoute] int id)
         {
             if (!ModelState.IsValid)
