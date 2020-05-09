@@ -24,6 +24,7 @@ Create the .gitignore file based on file https://github.com/github/gitignore/blo
 -   Responses > ClientResponse
 -   MockData > ClientMock
 -   Controllers > ClientsController
+-   Wwwroot > Html Documentation
 -   Startup > Swagger configuration
 -   Controllers > Data annotations
 
